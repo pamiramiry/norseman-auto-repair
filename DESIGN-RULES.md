@@ -1,0 +1,27 @@
+# Norseman Auto Repair: Design Rules (read before every change)
+
+- One-page site. Vanilla HTML/CSS/JS. No frameworks.
+- Light-dominant design (white / grey-light). Dark only for: hero copy panel (--black), stats band (--black), reviews band (--black-soft), footer (--black). NEVER put text over a photo.
+- Palette locked: red #C0272D, red-dark #9E1F24, red-light rgba(192,39,45,0.08), black #111111, black-soft #1A1A1A, white #FFFFFF, grey-light #F5F5F5, grey-mid #E0E0E0, grey-text #666666, body #444444, gold #D4A017 (stars/rating/header phone, dark backgrounds only).
+- Red is the only accent on light sections, used sparingly.
+- Fonts locked: Oswald (headings), Source Sans 3 (body). Radius 4px.
+- Images: stock photos only from Unsplash, Pexels or Pixabay (no attribution needed), fresh to this site, no brand logos, plates or other businesses' signage, every one logged in images/IMAGE-SOURCES.md. Shop and people photos stay as placeholders until the client sends real ones. No credits shown on the site.
+- NO grids of icon "blurb" cards anywhere. Use editorial numbered lists, alternating image/text rows, symptom lists or grouped lists.
+- No Viking, Norse or helmet imagery.
+- Exact-match phrase "Auto Repair in Etobicoke" must appear identically (same words, same order) in: title tag, H1, first sentence, meta description, OG/Twitter tags, hero alt, JSON-LD description. Title = keyword first | brand last. Never reword it.
+- Exactly one H1.
+- Every H2 contains "Auto Repair", "Mechanic" or "Tire", and most also contain "Etobicoke". Never rewrite H2s to drop the keyword.
+- The signature offer appears in the hero, at-a-glance strip, comparison table, FAQ #1 and pre-footer banner.
+- Every major section ends with the CTA pair (Call + Get a Quote).
+- Sticky mobile bottom bar (Call / Quote) always present.
+- Never invent facts. Unknowns use a highlighted [CONFIRM] placeholder. Fast fixes and the no-charge check are customer experiences, never promises. Appointments are needed; never promise walk-ins.
+- No "AI-sounding" copy (see banned phrase list in the build prompt). No em dashes or en dashes anywhere (copy, comments, docs). Write ranges with "to" or a hyphen.
+- Brand line "We find the real problem first. Then we fix only that." appears under the hero CTAs, at the end of Why us, and in the footer.
+- Copy follows the section 4b voice + persuasion playbook: owner's voice, specifics over adjectives, honest framing, risk removed. If a paragraph could sit on any other shop's site unchanged, rewrite it.
+- Never name a competitor, including inside review excerpts.
+- Eddie is the only person named on the site, as the owner. Never name other staff, including inside review excerpts (trim them out with "…").
+- Do not list muffler or exhaust services (separate business shares the office).
+- No car-brand logos. Text only.
+- No aggregateRating in schema.
+- Do not mention languages spoken.
+- Do not reference or copy any other project or previous site.
