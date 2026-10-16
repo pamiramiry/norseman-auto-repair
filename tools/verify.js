@@ -161,6 +161,7 @@ const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
   const noCta = st.sections.filter((s) => !/glance/.test(s.id) && !s.cta);
   ok(noCta.length === 0, "every major section ends with a CTA", noCta);
   ok(st.skip, "skip link");
+  ok(st.confirms === 0 && !/\[CONFIRM/.test(visible), "no visible [CONFIRM] placeholders");
   console.log("  INFO " + st.confirms + " [CONFIRM] placeholders visible, " + st.ctaPairs + " CTA pairs");
 
   console.log("\nContrast (every visible text element vs its painted background)");
@@ -256,7 +257,7 @@ const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
   await new Promise((r) => setTimeout(r, 1800));
   const after = await page.evaluate(() => [...document.querySelectorAll(".count")].map((c) => c.textContent + "/" + c.dataset.count));
   ok(before.every((v) => v === "0") && mid[0] > 0 && mid[0] < 65 && after.every((v) => v.split("/")[0] === v.split("/")[1]), "stats roll from 0 up to their real values", { before, mid, after });
-  ok(await page.evaluate(() => [...document.querySelectorAll(".stats__num .visually-hidden")].map((e) => e.textContent).join() === "65,3,6"), "screen readers get final stat values");
+  ok(await page.evaluate(() => [...document.querySelectorAll(".stats__num .visually-hidden")].map((e) => e.textContent).join() === "65,7+,3,6"), "screen readers get final stat values");
 
   await page.evaluate(() => document.querySelector("#quote button[type=submit]").click());
   const empty = await page.evaluate(() => ({ s: document.querySelector(".quote__status").className, inv: document.querySelectorAll('#quote [aria-invalid="true"]').length }));

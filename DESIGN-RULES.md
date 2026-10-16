@@ -14,7 +14,7 @@
 - The signature offer appears in the hero, at-a-glance strip, comparison table, FAQ #1 and pre-footer banner.
 - Every major section ends with the CTA pair (Call + Get a Quote).
 - Sticky mobile bottom bar (Call / Quote) always present.
-- Never invent facts. Unknowns use a highlighted [CONFIRM] placeholder. Fast fixes and the no-charge check are customer experiences, never promises. Appointments are needed; never promise walk-ins.
+- Never invent facts. No visible [CONFIRM] placeholders on the page (owner decision): leave an unknown out, or use wording backed by the reviews, and log it in TO-CONFIRM.md. Fast fixes and the no-charge check are customer experiences, never promises. Appointments are needed; never promise walk-ins.
 - No "AI-sounding" copy (see banned phrase list in the build prompt). No em dashes or en dashes anywhere (copy, comments, docs). Write ranges with "to" or a hyphen.
 - Brand line "We find the real problem first. Then we fix only that." appears under the hero CTAs, at the end of Why us, and in the footer.
 - Copy follows the section 4b voice + persuasion playbook: owner's voice, specifics over adjectives, honest framing, risk removed. If a paragraph could sit on any other shop's site unchanged, rewrite it.
