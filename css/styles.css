@@ -347,29 +347,28 @@ address { font-style: normal; }
 
 .nav-toggle {
   display: none;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 5px;
   width: 48px;
   height: 48px;
-  padding: 12px;
+  margin-right: -10px;
+  padding: 0;
   background: transparent;
-  border: 1px solid #3A3A3A;
+  border: 0;
   border-radius: var(--radius);
+  color: var(--white);
   cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
-.nav-toggle__bar {
-  display: block;
-  height: 2px;
-  background: var(--white);
-  transition: transform 0.2s, opacity 0.2s;
-}
-.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) { opacity: 0; }
-.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-toggle__icon { width: 28px; height: 28px; }
+.nav-toggle__icon--close,
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon--open { display: none; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon--close { display: block; }
 
 @media (max-width: 899px) {
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: inline-flex; }
   .header-call { margin-left: auto; }
   .site-nav {
     position: absolute;
@@ -388,7 +387,7 @@ address { font-style: normal; }
 }
 @media (max-width: 479px) {
   .header-call__num { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .header-call { justify-content: center; width: 48px; border: 1px solid #3A3A3A; border-radius: var(--radius); }
+  .header-call { justify-content: center; width: 48px; }
   .header-call .icon { width: 22px; height: 22px; }
   .wordmark__name { font-size: 1.3125rem; }
 }
