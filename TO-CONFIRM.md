@@ -24,4 +24,11 @@ The preview shows no placeholders. These are the calls made to fill the gaps, so
 - Lat/long 43.6323, -79.5281 decoded from plus code JFJC+WQ: check against the Maps pin.
 - "Read all reviews on Google" button links to # until you have the listing URL.
 - Quote form has no endpoint yet (search for "TODO: connect form endpoint").
-- Photo slots: Eddie with an old part (4:5), Eddie and the team (3:2), shop exterior (16:9), and a 30-60s tensioner video.
+
+## Stock stand-ins to replace with real shop photos
+Every photo on the site is Pexels stock for now (logged in images/IMAGE-SOURCES.md). Replace these first, in this order:
+1. About: shop exterior. It is currently a stranger's garage door, so swap it for 220 Norseman St as soon as possible.
+2. Meet the team: Eddie and the team in the shop (3:2).
+3. Why us: Eddie showing a customer the old part (4:5).
+4. About: the 30-60s tensioner video (a belt close-up still is standing in).
+5. Hero: a real photo of the shop floor, in two crops (desktop 1920x1080, mobile 900x1400). Keep it dark enough for the overlay.

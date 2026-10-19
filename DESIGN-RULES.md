@@ -1,11 +1,11 @@
 # Norseman Auto Repair: Design Rules (read before every change)
 
 - One-page site. Vanilla HTML/CSS/JS. No frameworks.
-- Light-dominant design (white / grey-light). Dark only for: hero copy panel (--black), stats band (--black), reviews band (--black-soft), footer (--black). NEVER put text over a photo.
+- Light-dominant design (white / grey-light). Dark only for: hero (photo under a dark overlay), stats band (--black), reviews band (--black-soft), footer (--black). Only the hero places text over a photo, always on a dark overlay of at least 60% black under the copy. Nowhere else.
 - Palette locked: red #C0272D, red-dark #9E1F24, red-light rgba(192,39,45,0.08), black #111111, black-soft #1A1A1A, white #FFFFFF, grey-light #F5F5F5, grey-mid #E0E0E0, grey-text #666666, body #444444, gold #D4A017 (stars/rating/header phone, dark backgrounds only).
 - Red is the only accent on light sections, used sparingly.
 - Fonts locked: Oswald (headings), Source Sans 3 (body). Radius 4px.
-- Images: stock photos only from Unsplash, Pexels or Pixabay (no attribution needed), fresh to this site, no brand logos, plates or other businesses' signage, every one logged in images/IMAGE-SOURCES.md. Shop and people photos stay as placeholders until the client sends real ones. No credits shown on the site.
+- Images: stock photos only from Unsplash, Pexels or Pixabay (no attribution needed), fresh to this site, no brand logos, plates or other businesses' signage, every one logged in images/IMAGE-SOURCES.md. Shop and people slots hold stock stand-ins (no faces presented as Eddie) until the client sends real ones. No credits shown on the site.
 - NO grids of icon "blurb" cards anywhere. Use editorial numbered lists, alternating image/text rows, symptom lists or grouped lists.
 - No Viking, Norse or helmet imagery.
 - Exact-match phrase "Auto Repair in Etobicoke" must appear identically (same words, same order) in: title tag, H1, first sentence, meta description, OG/Twitter tags, hero alt, JSON-LD description. Title = keyword first | brand last. Never reword it.

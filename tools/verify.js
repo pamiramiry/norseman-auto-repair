@@ -34,7 +34,7 @@ const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => { if (m.type() === "error" && !/maps|google|gstatic|ERR_|net::/i.test(m.text())) errors.push(m.text()); });
-  page.on("requestfailed", (r) => { if (r.url().startsWith(url)) errors.push("failed " + r.url()); });
+  page.on("requestfailed", (r) => { if (r.url().startsWith(url) && !/ERR_ABORTED/.test((r.failure() || {}).errorText || "")) errors.push("failed " + r.url() + " " + (r.failure() || {}).errorText); });
 
   await page.setViewport({ width: 1440, height: 900 });
   await page.goto(url, { waitUntil: "networkidle0" });
@@ -109,11 +109,11 @@ const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
   ok(files.every((f) => log.includes(f)), "every webp logged in IMAGE-SOURCES.md", files.filter((f) => !log.includes(f)));
   ok(!/wikimedia|shutterstock|istock|gettyimages/i.test(log), "only allowed sources in log");
   const phCount = await page.evaluate(() => document.querySelectorAll("figure.ph").length);
-  ok(phCount === 4, "4 placeholder slots (3 photos + 1 video)", phCount);
+  ok(phCount === 0, "no placeholder boxes left", phCount);
   let sharp = null;
   try { sharp = require("sharp"); } catch (e) { /* optional */ }
   if (sharp) {
-    const want = { "auto-repair-etobicoke-norseman-auto-repair-og.webp": [1200, 630], "auto-repair-etobicoke-norseman-auto-repair.webp": [1600, 1000] };
+    const want = { "auto-repair-etobicoke-norseman-auto-repair-og.webp": [1200, 630], "auto-repair-etobicoke-norseman-auto-repair.webp": [1920, 1080], "auto-repair-etobicoke-norseman-auto-repair-mobile.webp": [900, 1400] };
     for (const f of Object.keys(want)) {
       const m = await sharp(path.join(root, "images", f)).metadata();
       ok(m.width === want[f][0] && m.height === want[f][1] && !m.exif, f + " is " + want[f].join("x") + ", no EXIF");
@@ -202,6 +202,32 @@ const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
     return fails;
   });
   ok(contrast.length === 0, "all text meets WCAG AA", contrast.slice(0, 12));
+
+  console.log("\nHero photo");
+  for (const [w, h, want, other] of [[360, 740, "-mobile.webp", "repair.webp"], [390, 844, "-mobile.webp", "repair.webp"], [768, 1024, "repair.webp", "-mobile.webp"], [1024, 768, "repair.webp", "-mobile.webp"], [1440, 900, "repair.webp", "-mobile.webp"]]) {
+    const p2 = await browser.newPage();
+    const got = [];
+    p2.on("request", (r) => { if (/auto-repair-etobicoke-norseman-auto-repair(-mobile)?\.webp/.test(r.url())) got.push(r.url()); });
+    await p2.setViewport({ width: w, height: h });
+    await p2.goto(url, { waitUntil: "networkidle0" });
+    ok(got.some((u) => u.endsWith(want)) && !got.some((u) => u.endsWith(other)), "only the right hero file loads at " + w + "px", got.map((u) => u.split("/").pop()));
+    if (sharp) {
+      // Hide the text, screenshot the copy box, and find the lightest pixel behind the words.
+      await p2.addStyleTag({ content: ".hero__copy, .hero__copy * { color: transparent !important; border-color: transparent !important; background: transparent !important; } .hero__copy svg { visibility: hidden; } .hero__copy *::before, .hero__copy *::after { visibility: hidden; } .site-header, .mobile-bar { visibility: hidden; }" });
+      const box = await p2.evaluate(() => { const r = document.querySelector(".hero__copy").getBoundingClientRect(); return { x: r.left, y: r.top + window.scrollY, width: r.width, height: r.height }; });
+      const png = await p2.screenshot({ clip: box });
+      const { data, info } = await sharp(png).raw().toBuffer({ resolveWithObject: true });
+      const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      let maxL = 0;
+      for (let i = 0; i < data.length; i += info.channels) {
+        const L = 0.2126 * f(data[i]) + 0.7152 * f(data[i + 1]) + 0.0722 * f(data[i + 2]);
+        if (L > maxL) maxL = L;
+      }
+      const ratio = 1.05 / (maxL + 0.05);
+      ok(ratio >= 4.5, "white hero text has 4.5:1 or better on the lightest pixel behind it at " + w + "px (" + ratio.toFixed(2) + ")");
+    }
+    await p2.close();
+  }
 
   console.log("\nResponsive");
   for (const w of [360, 390, 768, 1024, 1440]) {

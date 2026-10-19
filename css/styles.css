@@ -393,14 +393,30 @@ address { font-style: normal; }
 }
 
 /* ---------- 5.2 hero ---------- */
+/* The only place text sits on a photo. Keep the overlay at 60% black or more under the copy. */
 .hero {
-  display: grid;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: min(calc(100svh - var(--header-h)), 760px);
+  overflow: hidden;
   background: var(--black);
 }
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0.62) 0%, rgba(17, 17, 17, 0.74) 45%, rgba(17, 17, 17, 0.88) 100%);
+}
 .hero__panel {
-  background: var(--black);
+  position: relative;
+  width: 100%;
   color: var(--on-dark-soft);
-  padding: 48px var(--gutter) 40px;
+  padding: 56px var(--gutter) 48px;
 }
 .hero__copy { max-width: 600px; }
 .hero h1 {
@@ -430,7 +446,8 @@ address { font-style: normal; }
   max-width: 100%;
   margin: 24px 0 0;
   padding: 10px 14px;
-  border: 1px solid #333333;
+  background: rgba(17, 17, 17, 0.6);
+  border: 1px solid #3A3A3A;
   border-radius: var(--radius);
   color: var(--on-dark);
   font-weight: 600;
@@ -438,31 +455,12 @@ address { font-style: normal; }
 .rating-badge__stars { color: var(--gold); display: inline-flex; }
 .rating-badge__num { color: var(--gold); font-family: var(--font-head); font-size: 1.25rem; }
 
-.hero__media { background: var(--black); }
-.hero__media img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-
 @media (min-width: 960px) {
-  .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    min-height: calc(100vh - var(--header-h));
-    max-height: 860px;
+  .hero { min-height: clamp(620px, calc(100vh - var(--header-h)), 860px); }
+  .hero::before {
+    background: linear-gradient(90deg, rgba(17, 17, 17, 0.94) 0%, rgba(17, 17, 17, 0.88) 45%, rgba(17, 17, 17, 0.66) 70%, rgba(17, 17, 17, 0.36) 100%);
   }
-  .hero__panel {
-    display: flex;
-    align-items: center;
-    padding: 64px 56px 64px max(var(--gutter), calc((100vw - var(--max)) / 2));
-  }
-  .hero__media { position: relative; }
-  .hero__media img {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    aspect-ratio: auto;
-  }
+  .hero__panel { padding: 72px var(--gutter) 72px max(var(--gutter), calc((100vw - var(--max)) / 2)); }
 }
 
 /* ---------- 5.3 at a glance ---------- */
@@ -571,49 +569,9 @@ address { font-style: normal; }
   .symptoms__row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; }
 }
 
-/* ---------- placeholders (shop photos still to come) ---------- */
-.ph {
-  position: relative;
-  display: grid;
-  place-items: center;
-  margin: 0;
-  padding: 20px;
-  background-color: var(--grey-light);
-  background-image: repeating-linear-gradient(-45deg, transparent 0 14px, rgba(0, 0, 0, 0.035) 14px 28px);
-  border: 1px solid var(--grey-mid);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.section--grey .ph { background-color: var(--white); }
-.ph--4x5 { aspect-ratio: 4 / 5; }
-.ph--3x2 { aspect-ratio: 3 / 2; }
-.ph--16x9 { aspect-ratio: 16 / 9; }
-.ph__label {
-  display: grid;
-  gap: 6px;
-  max-width: 36ch;
-  color: var(--grey-text);
-  font-size: 0.875rem;
-  line-height: 1.45;
-  text-align: center;
-}
-.ph__label strong {
-  color: var(--black);
-  font-family: var(--font-head);
-  font-size: 1rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.ph__label code {
-  font-size: 0.75rem;
-  color: var(--black);
-  overflow-wrap: anywhere;
-}
-.ph__alt { font-style: italic; }
-@media (max-width: 479px) {
-  .ph--16x9 .ph__alt, .ph--3x2 .ph__alt { display: none; }
-  .ph--16x9, .ph--3x2 { padding: 12px; }
-}
+/* ---------- in-section photos (stock stand-ins until the shop sends real ones) ---------- */
+.why__media img, .team__media, .about__media img { width: 100%; border-radius: var(--radius); }
+.about__media img { aspect-ratio: 16 / 9; object-fit: cover; }
 
 /* ---------- 5.6 why us ---------- */
 .why { display: grid; gap: 40px; }
@@ -639,7 +597,7 @@ address { font-style: normal; }
   .why__media { position: sticky; top: calc(var(--header-h) + 24px); }
 }
 @media (max-width: 959px) {
-  .why__media .ph--4x5 { aspect-ratio: 4 / 3; }
+  .why__media img { aspect-ratio: 4 / 3; object-fit: cover; object-position: center 60%; }
 }
 
 /* ---------- 5.7 stats ---------- */
